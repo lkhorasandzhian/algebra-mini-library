@@ -1,0 +1,3 @@
+C:/Users/Levon0/Downloads/GitHub/algebra-mini-library/PolynomialShell/cmake-build-debug/CMakeFiles/PolynomialShell.dir
+C:/Users/Levon0/Downloads/GitHub/algebra-mini-library/PolynomialShell/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Levon0/Downloads/GitHub/algebra-mini-library/PolynomialShell/cmake-build-debug/CMakeFiles/rebuild_cache.dir

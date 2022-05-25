@@ -1,0 +1,3 @@
+C:/Users/Levon0/Downloads/GitHub/algebra-mini-library/MatrixSet/cmake-build-debug/CMakeFiles/MatrixSet.dir
+C:/Users/Levon0/Downloads/GitHub/algebra-mini-library/MatrixSet/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Levon0/Downloads/GitHub/algebra-mini-library/MatrixSet/cmake-build-debug/CMakeFiles/rebuild_cache.dir
