@@ -37,4 +37,36 @@ class Matrix {
   const std::pair<size_t, size_t> size() const {
       return std::make_pair(field.size(), field[0].size());
   }
+
+  Matrix &operator+=(const Matrix &other) {
+      for (size_t i = 0; i < this->size().first; ++i) {
+          for (size_t j = 0; j < this->size().second; ++j) {
+              this->field[i][j] += other.field[i][j];
+          }
+      }
+      return *this;
+  }
+
+  Matrix operator+(const Matrix &other) const {
+      Matrix tmp(*this);
+      tmp += other;
+      return tmp;
+  }
+
+  template<typename numeric>
+  Matrix &operator*=(const numeric &scalar) {
+      for (size_t i = 0; i < this->size().first; ++i) {
+          for (size_t j = 0; j < this->size().second; ++j) {
+              this->field[i][j] *= scalar;
+          }
+      }
+      return *this;
+  }
+
+  template<typename numeric>
+  Matrix operator*(const numeric &scalar) const {
+      Matrix tmp(*this);
+      tmp *= scalar;
+      return tmp;
+  }
 };
