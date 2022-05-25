@@ -4,9 +4,49 @@
 template<typename T>
 class Matrix {
  private:
+  class MatrixIterator {
+   private:
+    size_t cur;
+    std::vector<T> vec;
+
+   public :
+    MatrixIterator(Matrix matr, size_t index) : cur(index) {
+        int x = 0;
+        vec.resize(matr.size().first * matr.size().second);
+        for (size_t i = 0; i < matr.size().first; i++) {
+            for (size_t j = 0; j < matr.size().second; j++) {
+                vec[x] = matr[i][j];
+                x++;
+            }
+        }
+    }
+
+    MatrixIterator &operator++() {
+        cur++;
+        return *this;
+    }
+
+    MatrixIterator &operator++(int) {
+        cur++;
+        return *this;
+    }
+
+    T &operator*() {
+        return vec[cur];
+    }
+    bool operator==(const MatrixIterator &other) const {
+        return this->cur == other.cur;
+    }
+    bool operator!=(const MatrixIterator &other) const {
+        return this->cur != other.cur;
+    }
+  };
   std::vector<std::vector<T>> field;
 
  public:
+  using iterator = MatrixIterator;
+  using Row = std::vector<T>;
+
   Matrix(const std::vector<std::vector<T>> &data) {
       field.reserve(data.size());
       for (size_t i = 0; i < data.size(); ++i) {
@@ -113,5 +153,20 @@ class Matrix {
       Matrix tmp(*this);
       tmp *= other;
       return tmp;
+  }
+
+  iterator begin() const {
+      return iterator(*this, 0);
+  }
+  iterator end() const {
+      return iterator(*this, this->size().first * this->size().second);
+  }
+
+  const Row &operator[](size_t i) const {
+      return field[i];
+  }
+
+  Row &operator[](size_t i) {
+      return field[i];
   }
 };
