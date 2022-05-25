@@ -93,4 +93,25 @@ class Matrix {
       }
       return tmp;
   }
+
+  Matrix &operator*=(const Matrix &other) {
+      Matrix tmp(*this);
+      for (size_t i = 0; i < tmp.field.size(); ++i) {
+          field[i].resize(other.field[0].size());
+          std::vector<T> cash(field[i].size(), 0);
+          field[i].swap(cash);
+          for (size_t j = 0; j < other.field[0].size(); ++j) {
+              for (size_t k = 0; k < tmp.field[0].size(); ++k) {
+                  field[i][j] += tmp.field[i][k] * other.field[k][j];
+              }
+          }
+      }
+      return *this;
+  }
+
+  Matrix operator*(const Matrix &other) const {
+      Matrix tmp(*this);
+      tmp *= other;
+      return tmp;
+  }
 };
