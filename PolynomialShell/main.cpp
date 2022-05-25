@@ -226,4 +226,55 @@ class Polynomial {
   constIter end() const {
       return polynom.cend();
   }
+
+  Polynomial operator*(Polynomial other) const {
+      Polynomial res((T()));
+      res.polynom.resize(polynom.size() * other.polynom.size());
+      for (size_t i = 0; i < polynom.size(); ++i) {
+          for (size_t j = 0; j < other.polynom.size(); ++j) {
+              res.polynom[i + j] += polynom[i] * other.polynom[j];
+          }
+      }
+      size_t last = res.polynom.size();
+      while (!res.polynom.empty() && res.polynom[--last] == T()) {
+          res.polynom.pop_back();
+      }
+      if (res.polynom.empty()) {
+          res.polynom.push_back(T());
+      }
+      return res;
+  }
+
+  Polynomial operator*(T coef) const {
+      Polynomial tmp(coef);
+      return (*this) * tmp;
+  }
+
+  friend Polynomial operator*(T coef, Polynomial current) {
+      return current * coef;
+  }
+
+  Polynomial &operator*=(Polynomial other) {
+      *this = (*this) * other;
+      return *this;
+  }
+
+  Polynomial &operator*=(T coef) {
+      Polynomial tmp(coef);
+      (*this) *= tmp;
+      return *this;
+  }
+
+  T operator()(T arg) const {
+      T res = T();
+      for (size_t i = 0; i < polynom.size(); ++i) {
+          T numeric = T(1);
+          for (size_t j = 0; j < i; ++j) {
+              numeric *= arg;
+          }
+          res += polynom[i] * numeric;
+      }
+      return res;
+  }
 };
+
