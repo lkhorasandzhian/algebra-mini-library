@@ -357,4 +357,63 @@ class Polynomial {
       }
       return res;
   }
+
+  Polynomial operator%(const Polynomial &other) const {
+      Polynomial poly(*this);
+      poly %= other;
+      return poly;
+  }
+
+  Polynomial &operator%=(const Polynomial &other) {
+      while (polynom.size() >= other.polynom.size()) {
+          T coef = polynom.back() / other.polynom.back();
+          size_t degree = polynom.size() - other.polynom.size();
+          std::vector<T> tmp;
+          tmp.resize(degree + 1);
+          tmp[degree] = coef;
+          Polynomial rem(tmp);
+          *this -= rem * other;
+      }
+      return *this;
+  }
+
+  Polynomial operator/(const Polynomial &other) const {
+      Polynomial tmp_this(*this);
+      Polynomial quot(T(0));
+      while (tmp_this.polynom.size() >= other.polynom.size()) {
+          T coef = tmp_this.polynom.back() / other.polynom.back();
+          size_t degree = tmp_this.polynom.size() - other.polynom.size();
+          std::vector<T> tmp;
+          tmp.resize(degree + 1);
+          tmp[degree] = coef;
+          quot += Polynomial(tmp);
+          tmp_this -= Polynomial(tmp) * other;
+      }
+      return quot;
+  }
+
+  Polynomial &operator/=(const Polynomial &other) {
+      *this = *this / other;
+      return *this;
+  }
+
+  Polynomial operator,(Polynomial other) const {
+      Polynomial dividend(T(0)), divider(T(0));
+      if (polynom.size() > other.polynom.size()) {
+          dividend = Polynomial(*this);
+          divider = Polynomial(other);
+      } else {
+          dividend = Polynomial(other);
+          divider = Polynomial(*this);
+      }
+      Polynomial rem(divider);
+      Polynomial pre_rem(divider);
+      do {
+          pre_rem = rem;
+          rem = dividend % divider;
+          dividend = divider;
+          divider = rem;
+      } while (!(rem.polynom.size() == 1 && rem.polynom[0] == T(0)));
+      return pre_rem;
+  }
 };
