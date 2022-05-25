@@ -345,4 +345,16 @@ class Polynomial {
       }
       return out;
   }
+
+  friend Polynomial operator&(Polynomial first, Polynomial second) {
+      Polynomial res((T()));
+      for (size_t i = 0; i < first.polynom.size(); ++i) {
+          Polynomial pre_res((T(1)));
+          for (size_t j = 0; j < i; ++j) {
+              pre_res *= second;
+          }
+          res += first.polynom[i] * pre_res;
+      }
+      return res;
+  }
 };
