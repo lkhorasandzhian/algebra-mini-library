@@ -276,5 +276,73 @@ class Polynomial {
       }
       return res;
   }
-};
 
+  friend std::ostream &operator<<(std::ostream &out, const Polynomial &current) {
+      for (long long i = static_cast<long long>(current.polynom.size()) - 1; i >= 0; --i) {
+          if (current.polynom.size() == 1) {
+              out << current.polynom[0];
+          } else {
+              if (current.polynom[i] != T(0)) {
+                  if (current.polynom[i] > T(0)) {
+                      if (current.polynom[i] != T(1)) {
+                          if (i == static_cast<long long>(current.polynom.size()) - 1) {
+                              if (i == 1) {
+                                  out << current.polynom[i] << "*x";
+                              } else if (i == 0) {
+                                  out << current.polynom[i];
+                              } else {
+                                  out << current.polynom[i] << "*x^" << i;
+                              }
+                          } else {
+                              if (i == 1) {
+                                  out << "+" << current.polynom[i] << "*x";
+                              } else if (i == 0) {
+                                  out << "+" << current.polynom[i];
+                              } else {
+                                  out << "+" << current.polynom[i] << "*x^" << i;
+                              }
+                          }
+                      } else {
+                          if (i == static_cast<long long>(current.polynom.size()) - 1) {
+                              if (i == 1) {
+                                  out << "x";
+                              } else if (i == 0) {
+                                  out << "1";
+                              } else {
+                                  out << "x^" << i;
+                              }
+                          } else {
+                              if (i == 1) {
+                                  out << "+x";
+                              } else if (i == 0) {
+                                  out << "+1";
+                              } else {
+                                  out << "+x^" << i;
+                              }
+                          }
+                      }
+                  } else if (current.polynom[i] < T(0)) {
+                      if (current.polynom[i] != T(-1)) {
+                          if (i == 1) {
+                              out << current.polynom[i] << "*x";
+                          } else if (i == 0) {
+                              out << current.polynom[i];
+                          } else {
+                              out << current.polynom[i] << "*x^" << i;
+                          }
+                      } else {
+                          if (i == 1) {
+                              out << "-x";
+                          } else if (i == 0) {
+                              out << "-1";
+                          } else {
+                              out << "-x^" << i;
+                          }
+                      }
+                  }
+              }
+          }
+      }
+      return out;
+  }
+};
