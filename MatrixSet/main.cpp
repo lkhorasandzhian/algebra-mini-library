@@ -69,4 +69,28 @@ class Matrix {
       tmp *= scalar;
       return tmp;
   }
+
+  Matrix &transpose() {
+      Matrix tmp(*this);
+      field.resize(tmp.field[0].size());
+      for (size_t i = 0; i < field.size(); ++i) {
+          field[i].resize(tmp.field.size());
+          for (size_t j = 0; j < field[0].size(); ++j) {
+              field[i][j] = tmp.field[j][i];
+          }
+      }
+      return *this;
+  }
+
+  Matrix transposed() const {
+      Matrix tmp(*this);
+      tmp.field.resize(field[0].size());
+      for (size_t i = 0; i < tmp.field.size(); ++i) {
+          tmp.field[i].resize(field.size());
+          for (size_t j = 0; j < tmp.field[0].size(); ++j) {
+              tmp.field[i][j] = field[j][i];
+          }
+      }
+      return tmp;
+  }
 };
